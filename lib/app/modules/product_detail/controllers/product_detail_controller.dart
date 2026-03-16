@@ -9,8 +9,19 @@ class ProductDetailController extends GetxController {
 
   final RxInt quantity = 1.obs;
 
-  double get totalPrice {
+  double get subtotal {
     return (product.value?.price ?? 0.0) * quantity.value;
+  }
+
+  double get discount {
+    if (subtotal > 200) {
+      return subtotal * 0.1;
+    }
+    return 0.0;
+  }
+
+  double get totalPrice {
+    return subtotal - discount;
   }
 
   @override

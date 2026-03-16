@@ -103,13 +103,27 @@ class ProductDetailView extends GetView<ProductDetailController> {
                       ),
                     ),
                   ),
-                  Text(
-                    "${product.price}",
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.green,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "${product.price}",
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.green,
+                        ),
+                      ),
+                      if (controller.subtotal > 200)
+                        const Text(
+                          "Disc 10%",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),
@@ -165,18 +179,37 @@ class ProductDetailView extends GetView<ProductDetailController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
-                        'Total Price',
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                      Text(
-                        '\$${controller.totalPrice.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                      if (controller.subtotal > 200) ...[
+                        Text(
+                          'Subtotal : \$${controller.subtotal.toStringAsFixed(2)}',
+                          style: const TextStyle(fontSize: 14, color: Colors.grey),
                         ),
-                      ),
+                        Text(
+                          'Discount : \$${controller.discount.toStringAsFixed(2)}',
+                          style: const TextStyle(fontSize: 14, color: Colors.green),
+                        ),
+                        Text(
+                          'Total : \$${controller.totalPrice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ] else ...[
+                        const Text(
+                          'Total Price',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                        Text(
+                          '\$${controller.totalPrice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ],
