@@ -25,6 +25,7 @@ class ProductController extends GetxController {
   var filteredProducts = <Product>[].obs;
 
   final TextEditingController searchController = TextEditingController();
+  var selectedCategory = Rxn<Category>();
 
   Future<void> getProduct() async {
     final result = await _productServices.getProduct();
@@ -39,14 +40,19 @@ class ProductController extends GetxController {
   }
 
   void searchProduct(String keyword) {
-    if (keyword.isEmpty) {
-      filteredProducts.value = productList;
-      return;
-    }
+    applyFilter();
+  }
 
-    filteredProducts.value = productList
-        .where((product) =>
-            product.title!.toLowerCase().contains(keyword.toLowerCase()))
-        .toList();
+  void applyFilter() {
+    String keyword = searchController.text.toLowerCase();
+
+    filteredProducts.value = productList.where((product) {
+      final matchesSearch =
+          keyword.isEmpty || product.title!.toLowerCase().contains(keyword);
+      final matchesCategory = selectedCategory.value == null ||
+          product.category == selectedCategory.value;
+
+      return matchesSearch && matchesCategory;
+    }).toList();
   }
 }
