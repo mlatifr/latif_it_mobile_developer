@@ -20,18 +20,4 @@ class HomeController extends GetxController {
   }
 
   void increment() => count.value++;
-
-  String getKataTerpanjang(String kata) {
-    List<String> listKata = kata.split(' ');
-
-    String terpanjang = '';
-
-    for (int i = 0; i < listKata.length; i++) {
-      if (listKata[i].length > terpanjang.length) {
-        terpanjang = listKata[i];
-      }
-    }
-    print(terpanjang);
-    return terpanjang;
-  }
 }
