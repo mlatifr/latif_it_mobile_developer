@@ -12,17 +12,19 @@ class SmartCartController extends GetxController {
   }
 
   Future<void> getCartItems() async {
-    try {
-      isLoading.value = true;
+    // try {
+    isLoading.value = true;
 
-      final items = await ProductDb.instance.getCartItems();
+    final items = await ProductDb.instance.getCartItems();
 
-      cartItems.assignAll(items);
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    } finally {
-      isLoading.value = false;
-    }
+    cartItems.assignAll(items);
+    cartItems.refresh();
+    print(cartItems);
+    // // } catch (e) {
+    //   Get.snackbar("Error", e.toString());
+    // } finally {
+    isLoading.value = false;
+    // }
   }
 
   Future<void> deleteCartItem(int id) async {

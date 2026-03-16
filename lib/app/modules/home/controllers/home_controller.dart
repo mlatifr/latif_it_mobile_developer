@@ -25,14 +25,12 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
-
   Future<void> changePage(int index) async {
     currentIndex.value = index;
     print(index);
     pageController.jumpToPage(index);
     if (index == 1) {
-      await SmartCartController().getCartItems();
+      Get.find<SmartCartController>().getCartItems();
     }
   }
 }
