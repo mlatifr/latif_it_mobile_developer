@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
 
-class ProductDetailController extends GetxController {
-  //TODO: Implement ProductDetailController
+import '../../product/model/product_model.dart';
 
-  final count = 0.obs;
+class ProductDetailController extends GetxController {
+  final Rxn<Product> product = Rxn<Product>();
+
   @override
   void onInit() {
     super.onInit();
+    product.value = Get.arguments as Product?;
   }
 
   @override
@@ -18,6 +20,4 @@ class ProductDetailController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
