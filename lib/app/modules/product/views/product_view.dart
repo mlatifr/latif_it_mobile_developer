@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:latif_it_mobile_developer/app/routes/app_pages.dart';
 import '../controllers/product_controller.dart';
 import '../model/product_model.dart';
 
@@ -86,32 +87,73 @@ class ProductView extends GetView<ProductController> {
           /// PRODUCT LIST
           Expanded(
             child: Obx(() {
-              return ListView.builder(
+              return GridView.builder(
+                padding: const EdgeInsets.all(12),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio:
+                      0.7, // Adjust based on your cell height needs
+                ),
                 itemCount: controller.filteredProducts.length,
                 itemBuilder: (context, index) {
                   final product = controller.filteredProducts[index];
 
                   return Card(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    child: ListTile(
-                      leading: Image.network(
-                        product.image ?? '',
-                        width: 50,
-                        height: 50,
-                      ),
-                      title: Text(
-                        product.title ?? '',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 2,
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.PRODUCT_DETAIL, arguments: product);
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(product.category?.name ?? ''),
-                          Text("${product.price}")
+                          Expanded(
+                            child: Hero(
+                              tag: product.id.toString(),
+                              child: Image.network(
+                                product.image ?? '',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.title ?? '',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  (categoryValues.reverse[product.category] ??
+                                              '')
+                                          .capitalizeFirst ??
+                                      '',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  "\$${product.price}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
