@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class UserServices {
-  static const _baseUrl = 'https://fakestoreapi.com/auth/login';
+  static const _baseUrl = 'https://fakestoreapi.com';
 
   final Dio dio;
 
