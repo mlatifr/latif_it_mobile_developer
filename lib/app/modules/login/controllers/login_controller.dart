@@ -72,8 +72,6 @@ class LoginController extends GetxController {
     String? token = prefs.getString('accessToken');
     if (token != null && token.isNotEmpty) {
       Get.offAllNamed(Routes.PRODUCT);
-    } else {
-      Get.offAllNamed(Routes.LOGIN);
     }
   }
 }
