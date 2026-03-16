@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:location/location.dart';
+import 'package:location/location.dart';
 
 class ProfileController extends GetxController {
   final picker = ImagePicker();
@@ -13,14 +13,14 @@ class ProfileController extends GetxController {
 
   final nameController = TextEditingController(text: "Latif");
   final positionController = TextEditingController(text: "IT Mobile Developer");
-  final emailController =
-      TextEditingController(text: "Jl. Arjuno 38, pepelegi, waru, sidoarjo");
+  final emailController = TextEditingController(text: "mlatifraldi@gmail.com");
   var latController = TextEditingController();
   var longController = TextEditingController();
 
   @override
   void onInit() {
     loadImage();
+    getLocation();
     super.onInit();
   }
 
@@ -61,46 +61,46 @@ class ProfileController extends GetxController {
   /// plugin error crash dengan gradle saya:
   ///
   ///
-  // Future<void> getLocation() async {
-  //   Location location = Location();
+  Future<void> getLocation() async {
+    Location location = Location();
 
-  //   bool serviceEnabled;
-  //   PermissionStatus permissionGranted;
-  //   LocationData locationData;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
 
-  //   serviceEnabled = await location.serviceEnabled();
-  //   if (!serviceEnabled) {
-  //     serviceEnabled = await location.requestService();
-  //     if (!serviceEnabled) {
-  //       Get.snackbar("Error", "GPS tidak aktif");
-  //       return;
-  //     }
-  //   }
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        Get.snackbar("Error", "GPS tidak aktif");
+        return;
+      }
+    }
 
-  //   permissionGranted = await location.hasPermission();
-  //   if (permissionGranted == PermissionStatus.denied) {
-  //     permissionGranted = await location.requestPermission();
-  //     if (permissionGranted != PermissionStatus.granted) {
-  //       Get.snackbar("Error", "Izin lokasi ditolak");
-  //       return;
-  //     }
-  //   }
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        Get.snackbar("Error", "Izin lokasi ditolak");
+        return;
+      }
+    }
 
-  //   if (permissionGranted == PermissionStatus.deniedForever) {
-  //     Get.snackbar("Error",
-  //         "Permission lokasi ditolak permanen. Silakan cek pengaturan HP.");
-  //     return;
-  //   }
+    if (permissionGranted == PermissionStatus.deniedForever) {
+      Get.snackbar("Error",
+          "Permission lokasi ditolak permanen. Silakan cek pengaturan HP.");
+      return;
+    }
 
-  //   await location.changeSettings(accuracy: LocationAccuracy.high);
+    await location.changeSettings(accuracy: LocationAccuracy.high);
 
-  //   try {
-  //     locationData = await location.getLocation();
+    try {
+      locationData = await location.getLocation();
 
-  //     latController.text = locationData.latitude.toString();
-  //     longController.text = locationData.longitude.toString();
-  //   } catch (e) {
-  //     Get.snackbar("Error", "Gagal mengambil lokasi: $e");
-  //   }
-  // }
+      latController.text = locationData.latitude.toString();
+      longController.text = locationData.longitude.toString();
+    } catch (e) {
+      Get.snackbar("Error", "Gagal mengambil lokasi: $e");
+    }
+  }
 }

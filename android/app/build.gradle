@@ -25,12 +25,17 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.example.latif_it_mobile_developer"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        // Ubah dari VERSION_1_8 ke VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        // Ubah dari '1.8' ke '17'
+        jvmTarget = '17'
     }
 
     defaultConfig {
