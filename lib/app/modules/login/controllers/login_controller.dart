@@ -52,7 +52,7 @@ class LoginController extends GetxController {
             snackPosition: SnackPosition.BOTTOM,
             duration: const Duration(seconds: 2));
 
-        Get.offAllNamed(Routes.PRODUCT);
+        Get.offAllNamed(Routes.HOME);
         return;
       }
 
@@ -71,7 +71,7 @@ class LoginController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('accessToken');
     if (token != null && token.isNotEmpty) {
-      Get.offAllNamed(Routes.PRODUCT);
+      Get.offAllNamed(Routes.HOME);
     }
   }
 }
