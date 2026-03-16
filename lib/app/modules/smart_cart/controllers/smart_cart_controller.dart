@@ -1,23 +1,32 @@
 import 'package:get/get.dart';
+import '../../../data/product_db.dart';
 
 class SmartCartController extends GetxController {
-  //TODO: Implement SmartCartController
+  var cartItems = <Map<String, dynamic>>[].obs;
+  var isLoading = false.obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
+    getCartItems();
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> getCartItems() async {
+    try {
+      isLoading.value = true;
+
+      final items = await ProductDb.instance.getCartItems();
+
+      cartItems.value = items;
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  Future<void> deleteCartItem(int id) async {
+    await ProductDb.instance.deleteCartItem(id);
+    await getCartItems();
   }
-
-  void increment() => count.value++;
 }
