@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:latif_it_mobile_developer/app/modules/smart_cart/controllers/smart_cart_controller.dart';
 
 import '../../../data/product_db.dart';
 import '../../product/model/product_model.dart';
@@ -61,5 +62,6 @@ class ProductDetailController extends GetxController {
       'Added to cart successfully!',
       snackPosition: SnackPosition.BOTTOM,
     );
+    await SmartCartController().getCartItems();
   }
 }

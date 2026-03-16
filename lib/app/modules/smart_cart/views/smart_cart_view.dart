@@ -24,7 +24,7 @@ class SmartCartView extends GetView<SmartCartController> {
         return ListView.builder(
           itemCount: controller.cartItems.length,
           itemBuilder: (context, index) {
-            final item = controller.cartItems[index];
+            var item = controller.cartItems[index];
 
             return Card(
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

@@ -17,7 +17,7 @@ class SmartCartController extends GetxController {
 
       final items = await ProductDb.instance.getCartItems();
 
-      cartItems.value = items;
+      cartItems.assignAll(items);
     } catch (e) {
       Get.snackbar("Error", e.toString());
     } finally {
