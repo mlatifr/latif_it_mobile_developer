@@ -59,6 +59,26 @@ class ProductView extends GetView<ProductController> {
                       controller.applyFilter();
                     },
                   )),
+              const SizedBox(width: 8),
+              Obx(() => DropdownButton<String?>(
+                    value: controller.sortOrder.value,
+                    hint: const Icon(Icons.sort),
+                    underline: const SizedBox(),
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'asc',
+                        child: Icon(Icons.arrow_upward, size: 15),
+                      ),
+                      DropdownMenuItem(
+                        value: 'desc',
+                        child: Icon(Icons.arrow_downward, size: 15),
+                      ),
+                    ],
+                    onChanged: (val) {
+                      controller.sortOrder.value = val;
+                      controller.applyFilter();
+                    },
+                  )),
               const SizedBox(width: 12),
             ],
           ),

@@ -26,6 +26,7 @@ class ProductController extends GetxController {
 
   final TextEditingController searchController = TextEditingController();
   var selectedCategory = Rxn<Category>();
+  var sortOrder = RxnString(); // 'asc' for Low->High, 'desc' for High->Low
 
   Future<void> getProduct() async {
     final result = await _productServices.getProduct();
@@ -46,7 +47,7 @@ class ProductController extends GetxController {
   void applyFilter() {
     String keyword = searchController.text.toLowerCase();
 
-    filteredProducts.value = productList.where((product) {
+    var result = productList.where((product) {
       final matchesSearch =
           keyword.isEmpty || product.title!.toLowerCase().contains(keyword);
       final matchesCategory = selectedCategory.value == null ||
@@ -54,5 +55,13 @@ class ProductController extends GetxController {
 
       return matchesSearch && matchesCategory;
     }).toList();
+
+    if (sortOrder.value == 'asc') {
+      result.sort((a, b) => (a.price ?? 0).compareTo(b.price ?? 0));
+    } else if (sortOrder.value == 'desc') {
+      result.sort((a, b) => (b.price ?? 0).compareTo(a.price ?? 0));
+    }
+
+    filteredProducts.value = result;
   }
 }
